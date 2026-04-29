@@ -138,9 +138,6 @@ export default function Landing() {
             takeoverDuration={0.25}
             autoResumeDelay={3000}
             autoRampDuration={0.6}
-            color0="#787f89"
-            color1="#1352ba"
-            color2="#94a3b8"
           />
         </div>
         <div className="absolute inset-0 z-10 bg-black/50" />
