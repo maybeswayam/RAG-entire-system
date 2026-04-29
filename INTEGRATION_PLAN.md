@@ -1,9 +1,11 @@
 # RAG Backend ↔ Frontend Integration Plan
 
 ## 1. Backend Audit
+
 The FastAPI backend (in `Production-level-RAG-system/backend/`) is robust but uses basic custom authentication via SQLite.
 
 ### Endpoints
+
 - **`POST /api/auth/register`** (No Auth): Expects `{ username, password }`, returns `{ message }`.
 - **`POST /api/auth/login`** (No Auth): Expects `{ username, password }`, returns `{ access_token, token_type: "bearer" }`. Support for hardcoded `admin`/`password` bypass.
 - **`POST /api/upload`** (Requires Bearer Token): Expects `multipart/form-data` with a `.pdf` file. Returns `{ status, filename }` or `{ error }` on failure.
@@ -13,6 +15,7 @@ The FastAPI backend (in `Production-level-RAG-system/backend/`) is robust but us
 - **`GET /`** (No Auth): Health check returning `{ status, message }`.
 
 ### Architecture Details
+
 - **Auth**: Decodes an internal JWT using its own `SECRET_KEY` and algorithm.
 - **Data Shapes**: Strict enforcement of payloads using Pydantic models.
 - **Streaming/WebSocket**: The endpoints do not currently support streaming natively (relies on blocking generation `rag_service.generate(q)`). 
@@ -20,6 +23,7 @@ The FastAPI backend (in `Production-level-RAG-system/backend/`) is robust but us
 ---
 
 ## 2. Frontend Audit
+
 The custom Vite/React frontend currently lives in `src/` at the root.
 
 - **Current API Calls**: There are **no RAG-related API calls currently in `src/`**. The application only simulates the frontend pages. The Landing page (`src/pages/Landing.tsx`) defines the product, but no data fetches occur.
@@ -29,6 +33,7 @@ The custom Vite/React frontend currently lives in `src/` at the root.
 ---
 
 ## 3. Files to Delete
+
 - **Delete Entirely**: `Production-level-RAG-system/frontend/` (Since the Vite frontend replaces this Next.js app completely).
 - **Potential Deletions (Backend)**: 
   - `backend/app/api/auth.py`
@@ -38,7 +43,9 @@ The custom Vite/React frontend currently lives in `src/` at the root.
 ---
 
 ## 4. Environment Variables
+
 ### Expected by Backend (Currently missing in `.env.local`):
+
 - `LLM_PROVIDER` (e.g., `groq` or `gemini`)
 - `VECTOR_DB_PROVIDER` (e.g., `faiss` or `pinecone`)
 - `EMBEDDING_PROVIDER` (e.g., `local` or `gemini`)
@@ -47,6 +54,7 @@ The custom Vite/React frontend currently lives in `src/` at the root.
 - `UPLOAD_DIR` (defaults to `data`)
 
 ### Expected by Frontend (Currently present in `.env.local`):
+
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 
@@ -64,6 +72,7 @@ The custom Vite/React frontend currently lives in `src/` at the root.
 ---
 
 ## 6. Proposed Final Structure
+
 The monorepo structure will be cleaned up to flatten the architecture.
 
 ```text
