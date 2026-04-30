@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { ArrowRight, Upload, Cpu, MessageSquare, Zap } from "lucide-react";
 import LiquidEther from "@/components/LiquidEther";
 import CustomScrollbar from "@/components/CustomScrollbar";
+import { Logo } from "@/components/Logo";
 
 const ragSteps = [
   {
@@ -126,6 +127,17 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden relative">
       <CustomScrollbar />
+      
+      {/* Top Left Logo */}
+      <div className="absolute top-4 left-6 z-50">
+        <div className="flex items-center gap-2">
+          <Logo className="w-8 h-8 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+          <span className="font-semibold text-lg tracking-tight hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+            BrainBase
+          </span>
+        </div>
+      </div>
+
       {/* Top absolute header for subtle user profile */}
       <AnimatePresence>
         {isAuthenticated && user && (

@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { supabase } from "../lib/supabase";
 import { Plus } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -35,11 +36,9 @@ export default function Login() {
       <div className="w-full sm:max-w-[420px] px-4 sm:px-0">
         <div className="bg-[#0f0f13] sm:rounded-2xl border border-white/[0.08] p-10 shadow-2xl">
           
-          <div className="flex items-center gap-2 mb-10">
-            <div className="bg-indigo-500 rounded text-white p-1 flex items-center justify-center">
-              <Plus size={18} strokeWidth={3} />
-            </div>
-            <span className="text-white font-bold text-[18px] tracking-tight">RAG Chat</span>
+          <div className="flex items-center gap-3 mb-10">
+            <Logo className="w-8 h-8 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
+            <span className="text-white font-bold text-[18px] tracking-tight">BrainBase</span>
           </div>
 
           <h2 className="text-[26px] font-bold text-white mb-2 tracking-tight">Welcome back</h2>

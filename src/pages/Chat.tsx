@@ -19,6 +19,7 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { uploadPdf, askQuery, getDocuments } from "@/lib/api";
+import { Logo } from "@/components/Logo";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -186,10 +187,8 @@ export default function Chat() {
             {/* Sidebar header */}
             <div className="p-4 border-b border-white/[0.06]">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-5 h-5 rounded bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                  <Sparkles className="h-3 w-3 text-white" />
-                </div>
-                <span className="text-sm font-semibold tracking-tight">NeuralDoc</span>
+                <Logo className="w-6 h-6 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)] flex-shrink-0" />
+                <span className="text-sm font-semibold tracking-tight text-white/90">BrainBase</span>
                 <button
                   id="sidebar-collapse-btn"
                   onClick={() => setSidebarOpen(false)}
