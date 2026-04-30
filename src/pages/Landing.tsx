@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { ArrowRight, Upload, Cpu, MessageSquare, Zap } from "lucide-react";
 import LiquidEther from "@/components/LiquidEther";
+import CustomScrollbar from "@/components/CustomScrollbar";
 
 const ragSteps = [
   {
@@ -115,10 +116,31 @@ function StepCard({ step, index }: { step: typeof ragSteps[0]; index: number }) 
 
 export default function Landing() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated, signOut } = useAuth();
+  
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden relative">
+      <CustomScrollbar />
+      {/* Top absolute header for subtle user profile */}
+      {isAuthenticated && user && (
+        <div className="absolute top-4 right-6 z-50 flex items-center gap-4 text-sm font-medium">
+          <span className="text-white/40">{user.email}</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleSignOut}
+            className="text-white/40 hover:text-white hover:bg-white/5 h-8 px-3"
+          >
+            Sign out
+          </Button>
+        </div>
+      )}
+
       {/* Hero — full screen fluid simulation */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
