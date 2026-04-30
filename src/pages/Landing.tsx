@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -127,19 +127,27 @@ export default function Landing() {
     <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden relative">
       <CustomScrollbar />
       {/* Top absolute header for subtle user profile */}
-      {isAuthenticated && user && (
-        <div className="absolute top-4 right-6 z-50 flex items-center gap-4 text-sm font-medium">
-          <span className="text-white/40">{user.email}</span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleSignOut}
-            className="text-white/40 hover:text-white hover:bg-white/5 h-8 px-3"
+      <AnimatePresence>
+        {isAuthenticated && user && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-4 right-6 z-50 flex items-center gap-4 text-sm font-medium"
           >
-            Sign out
-          </Button>
-        </div>
-      )}
+            <span className="text-white/40">{user.email}</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleSignOut}
+              className="text-white/40 hover:text-white hover:bg-white/5 h-8 px-3"
+            >
+              Sign out
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero — full screen fluid simulation */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
@@ -203,39 +211,56 @@ export default function Landing() {
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              {isAuthenticated ? (
-                <Button
-                  size="lg"
-                  onClick={() => navigate("/chat")}
-                  className="gap-2 px-8 bg-white text-black hover:bg-white/90 font-semibold"
-                >
-                  Open Chat
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    size="lg"
-                    onClick={() => navigate("/login")}
-                    className="gap-2 px-8 bg-white text-black hover:bg-white/90 font-semibold"
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 relative min-h-[48px]">
+              <AnimatePresence mode="wait">
+                {isAuthenticated ? (
+                  <motion.div
+                    key="authenticated"
+                    initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                    transition={{ duration: 0.3 }}
                   >
-                    Sign in to get started
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => navigate("/signup")}
-                    className="px-8 border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+                    <Button
+                      size="lg"
+                      onClick={() => navigate("/chat")}
+                      className="gap-2 px-8 bg-white text-black hover:bg-white/90 font-semibold"
+                    >
+                      Open Chat
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="unauthenticated"
+                    initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                    transition={{ duration: 0.3 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-3"
                   >
-                    Create free account
-                  </Button>
-                </>
-              )}
+                    <Button
+                      size="lg"
+                      onClick={() => navigate("/login")}
+                      className="gap-2 px-8 bg-white text-black hover:bg-white/90 font-semibold"
+                    >
+                      Sign in to get started
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => navigate("/signup")}
+                      className="px-8 border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+                    >
+                      Create free account
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <p className="text-xs text-white/30 mt-4">
+            <p className="text-xs text-white/30 mt-8">
               No password required · Sign in with email OTP
             </p>
           </motion.div>
