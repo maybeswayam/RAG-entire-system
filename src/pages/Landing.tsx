@@ -410,8 +410,8 @@ export default function Landing() {
       <footer className="border-t border-white/5 py-8 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-white rounded-sm" />
-            <span className="text-xs font-medium text-white">RAG Chat</span>
+            <Logo className="w-4 h-4 drop-shadow-[0_0_4px_rgba(99,102,241,0.5)]" />
+            <span className="text-xs font-medium text-white">BrainBase</span>
           </div>
           <p className="text-xs text-white/30">
             Built with Convex, React, and GPT-4o-mini
